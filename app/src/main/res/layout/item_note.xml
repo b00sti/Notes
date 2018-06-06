@@ -19,23 +19,55 @@
         android:orientation="vertical"
         android:padding="8dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvTags"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:padding="8dp"
+                android:textStyle="bold"
+                tools:text="Tags: #work"/>
+
+            <ImageView
+                android:id="@+id/ivEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:src="@drawable/ic_edit_24dp"/>
+
+            <ImageView
+                android:id="@+id/ivRemove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:src="@drawable/ic_delete_24dp"/>
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/tvAddingTime"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
-            tools:text="Added: 20.06.2017"/>
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:textSize="12sp"
+            tools:text="Created: 17:43 20.06.2017"/>
 
         <TextView
             android:id="@+id/tvDescription"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
-            tools:text="Description"/>
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:padding="8dp"
+            tools:text="Desc"/>
 
-        <TextView
-            android:id="@+id/tvTags"
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            tools:text="Tags: #work"/>
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

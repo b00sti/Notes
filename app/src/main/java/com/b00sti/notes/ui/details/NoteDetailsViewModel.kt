@@ -9,5 +9,4 @@ import com.b00sti.notes.model.Note
  */
 class NoteDetailsViewModel : BaseViewModel<NoteDetailsNavigator>() {
     val note = ObservableField<Note>()
-
 }

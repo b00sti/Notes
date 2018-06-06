@@ -42,7 +42,6 @@ abstract class BaseActivity<T : ViewDataBinding, out V : BaseViewModel<*>> : App
         super.onStop()
         pb?.dismissAllowingStateLoss()
     }
-
     //endregion
 
     private fun performDataBinding() {

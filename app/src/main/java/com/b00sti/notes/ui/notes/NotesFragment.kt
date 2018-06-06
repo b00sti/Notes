@@ -10,7 +10,9 @@ import com.b00sti.notes.R
 import com.b00sti.notes.base.BaseFragment
 import com.b00sti.notes.databinding.FragmentNotesBinding
 import com.b00sti.notes.model.Note
+import com.b00sti.notes.ui.adding.NewNoteFragment
 import com.b00sti.notes.ui.details.NoteDetailsFragment
+import com.b00sti.notes.ui.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_notes.*
 
 /**
@@ -18,7 +20,11 @@ import kotlinx.android.synthetic.main.fragment_notes.*
  */
 class NotesFragment : BaseFragment<FragmentNotesBinding, NotesViewModel>(), NotesNavigator {
 
-    private val adapter = NotesAdapter({ goToNoteDetails(it) })
+    private val adapter = NotesAdapter(object : NoteItemClicks {
+        override fun onItemClick(note: Note) = goToNoteDetails(note)
+        override fun onEditClick(note: Note) = goToEditNote(note)
+        override fun onDeleteClick(note: Note) = deleteNote(note)
+    })
 
     companion object {
         fun newInstance(): NotesFragment {
@@ -43,7 +49,20 @@ class NotesFragment : BaseFragment<FragmentNotesBinding, NotesViewModel>(), Note
         viewModel.refresh()
     }
 
+    override fun onResume() {
+        super.onResume()
+        getParent<MainActivity>()?.customizeAsParentView(R.string.title_notes)
+    }
+
     private fun goToNoteDetails(note: Note) {
         getBase()?.pushFragments(NoteDetailsFragment.newInstance(note), R.id.vgMainPlaceholder)
     }
+
+    private fun goToEditNote(note: Note) {
+        getBase()?.pushFragments(NewNoteFragment.newInstance(note), R.id.vgMainPlaceholder)
+    }
+
+    private fun deleteNote(note: Note) {
+    }
+
 }

@@ -7,7 +7,6 @@ import com.b00sti.notes.base.BaseNavigator
  */
 interface MainNavigator : BaseNavigator {
 
-    fun onBackArrowClick()
     fun onNewClick()
 
 }

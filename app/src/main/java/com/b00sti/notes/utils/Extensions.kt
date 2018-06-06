@@ -1,6 +1,8 @@
 package com.b00sti.notes.utils
 
+import android.os.Bundle
 import android.support.v4.app.DialogFragment
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.b00sti.notes.R
 import com.b00sti.notes.utils.widgets.ProgressBarDialog
@@ -18,3 +20,5 @@ fun AppCompatActivity.showProgressDialog(): DialogFragment? {
 fun AppCompatActivity.hideProgressDialog(dialog: DialogFragment?) {
     this.runOnUiThread({ dialog?.dismissAllowingStateLoss() })
 }
+
+inline fun <FRAGMENT : Fragment> FRAGMENT.putArgs(argsBuilder: Bundle.() -> Unit): FRAGMENT = this.apply { arguments = Bundle().apply(argsBuilder) }

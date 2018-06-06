@@ -8,6 +8,8 @@ import com.b00sti.notes.R
 import com.b00sti.notes.base.BaseFragment
 import com.b00sti.notes.databinding.FragmentNoteDetailsBinding
 import com.b00sti.notes.model.Note
+import com.b00sti.notes.ui.main.MainActivity
+import com.b00sti.notes.utils.putArgs
 
 /**
  * Created by b00sti on 05.06.2018
@@ -16,13 +18,8 @@ class NoteDetailsFragment : BaseFragment<FragmentNoteDetailsBinding, NoteDetails
 
     companion object {
         const val ARG_NOTE = "bundle_note"
-        fun newInstance(note: Note): NoteDetailsFragment {
-            val fragment = NoteDetailsFragment()
-            val bundle = Bundle()
-            bundle.putParcelable(ARG_NOTE, note)
-            fragment.arguments = bundle
-            return fragment//NoteDetailsFragment().apply { arguments?.putParcelable(ARG_NOTE, note) }
-        }
+        fun newInstance(note: Note): NoteDetailsFragment =
+                NoteDetailsFragment().putArgs { putParcelable(ARG_NOTE, note) }
     }
 
     override fun getViewModels(): NoteDetailsViewModel = ViewModelProviders.of(this).get(NoteDetailsViewModel::class.java)
@@ -33,6 +30,11 @@ class NoteDetailsFragment : BaseFragment<FragmentNoteDetailsBinding, NoteDetails
         super.onViewCreated(view, savedInstanceState)
         viewModel.setNavigator(this)
         initUI()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getParent<MainActivity>()?.customizeAsChildView(R.string.title_note_details)
     }
 
     private fun initUI() {

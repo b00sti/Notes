@@ -18,7 +18,13 @@ private val ITEM_CALLBACK = object : DiffUtil.ItemCallback<Note>() {
     override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean = oldItem == newItem
 }
 
-class NotesAdapter(private val clickListener: (Note) -> Unit) : ListAdapter<Note, NotesAdapter.NoteViewHolder>(ITEM_CALLBACK) {
+interface NoteItemClicks {
+    fun onItemClick(note: Note)
+    fun onEditClick(note: Note)
+    fun onDeleteClick(note: Note)
+}
+
+class NotesAdapter(private val clickListener: NoteItemClicks) : ListAdapter<Note, NotesAdapter.NoteViewHolder>(ITEM_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -30,11 +36,13 @@ class NotesAdapter(private val clickListener: (Note) -> Unit) : ListAdapter<Note
     }
 
     inner class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(note: Note, clickListener: (Note) -> Unit) {
+        fun bind(note: Note, clickListener: NoteItemClicks) {
             itemView.tvDescription.text = "description: " + note.desc
             itemView.tvAddingTime.text = "Time: " + note.timestamp
             itemView.tvTags.text = "Tags: " + note.tag
-            itemView.setOnClickListener { clickListener(note) }
+            itemView.setOnClickListener { clickListener.onItemClick(note) }
+            itemView.ivEdit.setOnClickListener { clickListener.onEditClick(note) }
+            itemView.ivRemove.setOnClickListener { clickListener.onDeleteClick(note) }
         }
     }
 }

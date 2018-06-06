@@ -7,6 +7,9 @@ import com.b00sti.notes.BR
 import com.b00sti.notes.R
 import com.b00sti.notes.base.BaseFragment
 import com.b00sti.notes.databinding.FragmentAddNoteBinding
+import com.b00sti.notes.model.Note
+import com.b00sti.notes.ui.main.MainActivity
+import com.b00sti.notes.utils.putArgs
 
 /**
  * Created by b00sti on 05.06.2018
@@ -14,9 +17,13 @@ import com.b00sti.notes.databinding.FragmentAddNoteBinding
 class NewNoteFragment : BaseFragment<FragmentAddNoteBinding, NewNoteViewModel>(), NewNoteNavigator {
 
     companion object {
+        const val ARG_NOTE = "bundle_note"
         fun newInstance(): NewNoteFragment {
             return NewNoteFragment()
         }
+
+        fun newInstance(note: Note): NewNoteFragment =
+                NewNoteFragment().putArgs { putParcelable(ARG_NOTE, note) }
     }
 
     override fun getViewModels(): NewNoteViewModel = ViewModelProviders.of(this).get(NewNoteViewModel::class.java)
@@ -29,11 +36,16 @@ class NewNoteFragment : BaseFragment<FragmentAddNoteBinding, NewNoteViewModel>()
         initUI()
     }
 
+    override fun onResume() {
+        super.onResume()
+        getParent<MainActivity>()?.customizeAsChildView(R.string.title_new_note)
+    }
+
     private fun initUI() {
-        /*viewModel.notesList.observe(this, Observer { list -> adapter.submitList(list) })
-        rvNotes.layoutManager = LinearLayoutManager(getParent())
-        rvNotes.adapter = adapter
-        viewModel.refresh()*/
+        val note = arguments?.getParcelable<Note>(ARG_NOTE)
+        note?.let {
+            viewModel.note.set(it)
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package com.b00sti.notes.ui.main
 
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.annotation.StringRes
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
@@ -13,6 +14,7 @@ import com.b00sti.notes.base.BaseActivity
 import com.b00sti.notes.databinding.ActivityMainBinding
 import com.b00sti.notes.ui.adding.NewNoteFragment
 import com.b00sti.notes.ui.notes.NotesFragment
+import com.b00sti.notes.utils.ResUtils
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -24,7 +26,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
     override fun getViewModels(): MainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
     override fun getBindingVariable(): Int = BR.vm
     override fun getLayoutId(): Int = R.layout.activity_main
-    lateinit var mSearch: MenuItem
+    private var mSearch: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +38,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         mSearch = menu.findItem(R.id.action_search)
-        val mSearchView = mSearch.actionView as SearchView
+        val mSearchView = mSearch?.actionView as SearchView
         mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 toast("Text submitted: " + query)
@@ -48,7 +50,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
                 return false
             }
         })
-        mSearch.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+        mSearch?.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
                 return true
             }
@@ -61,16 +63,39 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
         return true
     }
 
-    override fun onBackArrowClick() {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
+    fun customizeAsParentView(@StringRes toolbarTitleId: Int) {
+        setToolbarTitle(toolbarTitleId)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        supportActionBar?.setDisplayShowHomeEnabled(false)
+        fabAddNewNote.visibility = View.VISIBLE
+        mSearch?.isVisible = true
+    }
+
+    fun customizeAsChildView(@StringRes toolbarTitleId: Int) {
+        setToolbarTitle(toolbarTitleId)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        fabAddNewNote.visibility = View.GONE
+        mSearch?.collapseActionView()
+        mSearch?.isVisible = false
+    }
+
+    private fun setToolbarTitle(@StringRes id: Int) {
+        supportActionBar?.title = ResUtils.getString(id)
     }
 
     override fun onNewClick() {
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setTitle("Add new note")
-        fabAddNewNote.visibility = View.GONE
         pushFragments(NewNoteFragment.newInstance(), R.id.vgMainPlaceholder)
-        mSearch?.isVisible = false
     }
+
 }
