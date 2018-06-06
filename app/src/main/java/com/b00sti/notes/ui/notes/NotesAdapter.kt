@@ -31,7 +31,7 @@ class NotesAdapter(private val clickListener: (Note) -> Unit) : ListAdapter<Note
 
     inner class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(note: Note, clickListener: (Note) -> Unit) {
-            itemView.tvDescription.text = "description: " + note.name
+            itemView.tvDescription.text = "description: " + note.desc
             itemView.tvAddingTime.text = "Time: " + note.timestamp
             itemView.tvTags.text = "Tags: " + note.tag
             itemView.setOnClickListener { clickListener(note) }

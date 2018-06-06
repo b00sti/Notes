@@ -30,7 +30,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
         super.onCreate(savedInstanceState)
         setSupportActionBar(toolbarMain)
         getViewModels().setNavigator(this)
-        pushFragments(NotesFragment.newInstance(), R.id.vgMainPlaceholder, first = true)
+        pushFragments(NotesFragment.newInstance(), R.id.vgMainPlaceholder, first = true, backStack = false)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
