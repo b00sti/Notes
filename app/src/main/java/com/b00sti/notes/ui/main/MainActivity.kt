@@ -7,7 +7,6 @@ import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.core.widget.toast
 import com.b00sti.notes.BR
 import com.b00sti.notes.R
 import com.b00sti.notes.base.BaseActivity
@@ -41,12 +40,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
         val mSearchView = mSearch?.actionView as SearchView
         mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                toast("Text submitted: " + query)
+                val fragment = supportFragmentManager.findFragmentById(R.id.vgMainPlaceholder)
+                (fragment as? NotesFragment)?.searchFor(query)
                 return false
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                toast("Text changed: " + newText)
+                val fragment = supportFragmentManager.findFragmentById(R.id.vgMainPlaceholder)
+                (fragment as? NotesFragment)?.searchFor(newText)
                 return false
             }
         })
@@ -56,7 +57,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-                toast("Text collapsed: ")
+                val fragment = supportFragmentManager.findFragmentById(R.id.vgMainPlaceholder)
+                (fragment as? NotesFragment)?.refreshNotes()
                 return true
             }
         })

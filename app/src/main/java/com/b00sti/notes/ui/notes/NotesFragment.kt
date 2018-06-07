@@ -46,7 +46,7 @@ class NotesFragment : BaseFragment<FragmentNotesBinding, NotesViewModel>(), Note
         viewModel.notesList.observe(this, Observer { list -> adapter.submitList(list) })
         rvNotes.layoutManager = LinearLayoutManager(getParent())
         rvNotes.adapter = adapter
-        viewModel.refresh()
+        refreshNotes()
     }
 
     override fun onResume() {
@@ -62,7 +62,9 @@ class NotesFragment : BaseFragment<FragmentNotesBinding, NotesViewModel>(), Note
         getBase()?.pushFragments(NewNoteFragment.newInstance(note), R.id.vgMainPlaceholder)
     }
 
-    private fun deleteNote(note: Note) {
-    }
+    private fun deleteNote(note: Note) = viewModel.deleteNote(note)
 
+    fun searchFor(queredText: String) = viewModel.searchFor(queredText)
+
+    fun refreshNotes() = viewModel.refresh()
 }

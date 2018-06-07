@@ -7,4 +7,4 @@ import kotlinx.android.parcel.Parcelize
  * Created by b00sti on 05.06.2018
  */
 @Parcelize
-data class Note(val desc: String, val timestamp: Int, val tag: String) : Parcelable
+data class Note(var desc: String = "", var timestamp: Long = System.currentTimeMillis(), var tag: String = "") : Parcelable

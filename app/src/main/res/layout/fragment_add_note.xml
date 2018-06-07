@@ -6,6 +6,8 @@
 
         <import type="android.view.View"/>
 
+        <import type="com.b00sti.notes.utils.StringUtils"/>
+
         <variable
             name="vm"
             type="com.b00sti.notes.ui.adding.NewNoteViewModel"/>
@@ -21,24 +23,29 @@
             android:layout_height="0dp"
             android:layout_margin="16dp"
             android:background="@drawable/input_background"
-            android:elevation="4dp"
+            addHashTag="@{vm.note.tag}"
             android:gravity="top|start"
             android:hint="@string/add_your_tags"
             android:maxLines="1"
             android:padding="8dp"
-            android:text="@{vm.note.tag}"
+            android:elevation="1dp"
+            android:focusable="true"
+            android:longClickable="true"
+            android:text="@{StringUtils.formatTag(vm.note.tag)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/etNote"
+            android:elevation="1dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="16dp"
             android:background="@drawable/input_background"
-            android:elevation="4dp"
+            android:focusable="true"
             android:gravity="top|start"
+            android:longClickable="true"
             android:hint="@string/add_your_note"
             android:padding="8dp"
             android:text="@{vm.note.desc}"
@@ -55,8 +62,9 @@
             android:layout_marginBottom="24dp"
             android:layout_marginEnd="48dp"
             android:layout_marginStart="48dp"
-            android:elevation="4dp"
+            android:elevation="1dp"
             android:text="@string/save"
+            android:onClick="@{() -> vm.updateNote()}"
             android:textColor="@android:color/white"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

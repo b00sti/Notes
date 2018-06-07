@@ -10,6 +10,7 @@ import com.b00sti.notes.databinding.FragmentAddNoteBinding
 import com.b00sti.notes.model.Note
 import com.b00sti.notes.ui.main.MainActivity
 import com.b00sti.notes.utils.putArgs
+import kotlinx.android.synthetic.main.fragment_add_note.*
 
 /**
  * Created by b00sti on 05.06.2018
@@ -43,9 +44,20 @@ class NewNoteFragment : BaseFragment<FragmentAddNoteBinding, NewNoteViewModel>()
 
     private fun initUI() {
         val note = arguments?.getParcelable<Note>(ARG_NOTE)
-        note?.let {
-            viewModel.note.set(it)
+        when {
+            note != null -> viewModel.note.set(note)
+            else         -> viewModel.note.set(Note())
         }
+    }
+
+    override fun onNoteUpdated() {
+        getBase()?.onFinishLoading()
+        getBase()?.onBackPressed()
+    }
+
+    override fun prepareNoteFromViews() {
+        viewModel.note.get()?.tag = etTags.text.toString()
+        viewModel.note.get()?.desc = etNote.text.toString()
     }
 
 }

@@ -56,12 +56,7 @@ abstract class BaseActivity<T : ViewDataBinding, out V : BaseViewModel<*>> : App
 
     private fun onLoading(loading: Boolean) {
         return when {
-            loading ->
-                if (pb == null) {
-                    pb = showProgressDialog()
-                } else {
-                    return
-                }
+            loading -> pb = showProgressDialog()
             else    -> hideProgressDialog(pb)
         }
     }

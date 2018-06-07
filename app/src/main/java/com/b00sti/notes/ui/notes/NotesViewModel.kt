@@ -1,40 +1,45 @@
 package com.b00sti.notes.ui.notes
 
 import android.arch.lifecycle.MutableLiveData
+import com.b00sti.notes.R
+import com.b00sti.notes.api.RxFirebaseDatabase
 import com.b00sti.notes.base.BaseViewModel
 import com.b00sti.notes.model.Note
-import io.reactivex.Observable
+import com.b00sti.notes.utils.RxUtils
+import io.reactivex.Single
+import io.reactivex.rxkotlin.subscribeBy
 
 /**
  * Created by b00sti on 05.06.2018
  */
 class NotesViewModel : BaseViewModel<NotesNavigator>() {
 
-    val notesList = MutableLiveData<List<Note>>()
+    val notesList = MutableLiveData<ArrayList<Note>>()
+
+    fun deleteNote(note: Note) {
+        getDisposables().add(RxFirebaseDatabase.deleteNote(note)
+                .compose(RxUtils.applyCompletableSchedulers())
+                .subscribeBy(
+                        onComplete = { refresh() },
+                        onError = { getNavigator().showToast(R.string.default_error) }))
+    }
 
     fun refresh() {
-        getBuckets()
-                .doOnSubscribe({ getNavigator().onStartLoading() })
-                .doOnTerminate({ getNavigator().onFinishLoading() })
-                .subscribe { notesList.postValue(it) }
+        getDisposables().add(getNoteList()
+                .compose(RxUtils.applySchedulers())
+                .subscribeBy(
+                        onSuccess = { notesList.postValue(it) },
+                        onError = { getNavigator().showToast(R.string.default_error) }))
     }
 
-    fun getBuckets(): Observable<List<Note>> {
-        return Observable.create { emitter ->
-            val items = listOf(
-                    Note("Europe" + System.currentTimeMillis(), 10, "eur"),
-                    Note("Asia" + System.currentTimeMillis(), 10, "asi"),
-                    Note("Africa" + System.currentTimeMillis(), 10, "afr")
-            )
-            val list = notesList.value?.toMutableList()
-            list?.addAll(items)
-            if (list != null) {
-                emitter.onNext(list)
-            } else {
-                emitter.onNext(items)
-            }
-            emitter.onComplete()
-        }
+    fun searchFor(queredText: String) {
+        getDisposables().add(RxFirebaseDatabase.searchNotes(queredText)
+                .compose(RxUtils.applySchedulers())
+                .subscribeBy(
+                        onSuccess = { notesList.postValue(it) },
+                        onError = { getNavigator().showToast(R.string.default_error) }))
     }
+
+    private fun getNoteList(): Single<ArrayList<Note>> = RxFirebaseDatabase.getNotes()
 
 }

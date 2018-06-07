@@ -7,4 +7,6 @@
     <string name="add_your_note">Add your note</string>
     <string name="add_your_tags">Add your tags</string>
     <string name="save">Save</string>
+    <string name="default_error">Error occurs</string>
+    <string name="validation_prompt">Please fill all fields</string>
 </resources>

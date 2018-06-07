@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.b00sti.notes.R
 import com.b00sti.notes.model.Note
+import com.b00sti.notes.utils.StringUtils
 import kotlinx.android.synthetic.main.item_note.view.*
 
 /**
@@ -37,9 +38,9 @@ class NotesAdapter(private val clickListener: NoteItemClicks) : ListAdapter<Note
 
     inner class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(note: Note, clickListener: NoteItemClicks) {
-            itemView.tvDescription.text = "description: " + note.desc
-            itemView.tvAddingTime.text = "Time: " + note.timestamp
-            itemView.tvTags.text = "Tags: " + note.tag
+            itemView.tvDescription.text = note.desc
+            itemView.tvAddingTime.text = StringUtils.formatTime(note.timestamp)
+            itemView.tvTags.text = StringUtils.formatTagWithTitle(note.tag)
             itemView.setOnClickListener { clickListener.onItemClick(note) }
             itemView.ivEdit.setOnClickListener { clickListener.onEditClick(note) }
             itemView.ivRemove.setOnClickListener { clickListener.onDeleteClick(note) }

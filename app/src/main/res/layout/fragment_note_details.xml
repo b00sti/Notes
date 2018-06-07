@@ -6,6 +6,8 @@
 
         <import type="android.view.View"/>
 
+        <import type="com.b00sti.notes.utils.StringUtils"/>
+
         <variable
             name="vm"
             type="com.b00sti.notes.ui.details.NoteDetailsViewModel"/>
@@ -17,7 +19,7 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tvCreationData"
@@ -27,7 +29,7 @@
                 android:drawablePadding="16dp"
                 android:drawableStart="@drawable/ic_alarm_24dp"
                 android:gravity="center_vertical"
-                android:text="@{`` + vm.note.timestamp}"
+                android:text="@{StringUtils.formatTime(vm.note.timestamp)}"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/tvTags"
                 app:layout_constraintTop_toTopOf="parent"
@@ -50,7 +52,7 @@
                 android:drawablePadding="16dp"
                 android:drawableStart="@drawable/ic_tags_24dp"
                 android:gravity="center_vertical"
-                android:text="@{vm.note.tag}"
+                android:text="@{StringUtils.formatTag(vm.note.tag)}"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/tvCreationData"
                 tools:text="Tags: Sport"/>
