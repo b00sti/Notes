@@ -28,7 +28,7 @@ class NotesViewModel : BaseViewModel<NotesNavigator>() {
         getDisposables().add(getNoteList()
                 .compose(RxUtils.applySchedulers())
                 .subscribeBy(
-                        onSuccess = { notesList.postValue(it) },
+                        onSuccess = { updateViews(it) },
                         onError = { getNavigator().showToast(R.string.default_error) }))
     }
 
@@ -36,10 +36,15 @@ class NotesViewModel : BaseViewModel<NotesNavigator>() {
         getDisposables().add(RxFirebaseDatabase.searchNotes(queredText)
                 .compose(RxUtils.applySchedulers())
                 .subscribeBy(
-                        onSuccess = { notesList.postValue(it) },
+                        onSuccess = { updateViews(it) },
                         onError = { getNavigator().showToast(R.string.default_error) }))
     }
 
     private fun getNoteList(): Single<ArrayList<Note>> = RxFirebaseDatabase.getNotes()
+
+    private fun updateViews(notes: ArrayList<Note>) {
+        notesList.postValue(notes)
+        getNavigator().setNoContentLabelAsVisible(notes.size == 0)
+    }
 
 }

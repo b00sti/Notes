@@ -19,9 +19,7 @@ class NewNoteFragment : BaseFragment<FragmentAddNoteBinding, NewNoteViewModel>()
 
     companion object {
         const val ARG_NOTE = "bundle_note"
-        fun newInstance(): NewNoteFragment {
-            return NewNoteFragment()
-        }
+        fun newInstance(): NewNoteFragment = NewNoteFragment()
 
         fun newInstance(note: Note): NewNoteFragment =
                 NewNoteFragment().putArgs { putParcelable(ARG_NOTE, note) }
@@ -46,7 +44,7 @@ class NewNoteFragment : BaseFragment<FragmentAddNoteBinding, NewNoteViewModel>()
         val note = arguments?.getParcelable<Note>(ARG_NOTE)
         when {
             note != null -> viewModel.note.set(note)
-            else         -> viewModel.note.set(Note())
+            else -> viewModel.note.set(Note())
         }
     }
 

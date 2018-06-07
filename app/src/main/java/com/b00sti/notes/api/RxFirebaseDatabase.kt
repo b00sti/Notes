@@ -52,7 +52,7 @@ object RxFirebaseDatabase : IFirebaseDataBase {
             override fun onDataChange(data: DataSnapshot?) {
                 when {
                     data == null || data.childrenCount == 0L -> emitter.onError(NullPointerException())
-                    else                                     -> {
+                    else -> {
                         val notes = ArrayList<Note>()
                         for (entry in data.children) {
                             try {
@@ -81,7 +81,7 @@ object RxFirebaseDatabase : IFirebaseDataBase {
                         val notes = ArrayList<Note>()
                         when {
                             data == null || data.childrenCount == 0L -> emitter.onSuccess(notes)
-                            else                                     -> {
+                            else -> {
                                 for (entry in data.children) {
                                     try {
                                         entry.getValue(Note::class.java)?.let { notes.add(it) }

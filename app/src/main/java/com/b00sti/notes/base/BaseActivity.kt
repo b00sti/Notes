@@ -30,8 +30,6 @@ abstract class BaseActivity<T : ViewDataBinding, out V : BaseViewModel<*>> : App
     protected abstract fun getBindingVariable(): Int
     @LayoutRes protected abstract fun getLayoutId(): Int
 
-
-    //region Lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getLayoutId())
@@ -42,7 +40,6 @@ abstract class BaseActivity<T : ViewDataBinding, out V : BaseViewModel<*>> : App
         super.onStop()
         pb?.dismissAllowingStateLoss()
     }
-    //endregion
 
     private fun performDataBinding() {
         viewDataBinding = DataBindingUtil.setContentView(this, getLayoutId())

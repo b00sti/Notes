@@ -4,6 +4,7 @@ import android.databinding.BindingAdapter
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import com.b00sti.notes.R
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,8 +17,8 @@ object StringUtils {
     fun formatTag(text: String?): String {
         return when {
             !text.isNullOrEmpty() && !text?.get(0).toString().equals("#") -> "#$text"
-            text != null                                                  -> text
-            else                                                          -> ""
+            text != null -> text
+            else -> ""
         }
     }
 
@@ -27,7 +28,7 @@ object StringUtils {
     }
 
     @JvmStatic
-    fun formatTagWithTitle(text: String?): String = "Tag: " + formatTag(text)
+    fun formatTagWithTitle(text: String?): String = ResUtils.getString(R.string.tag_info) + formatTag(text)
 
     @JvmStatic
     @BindingAdapter("addHashTag")

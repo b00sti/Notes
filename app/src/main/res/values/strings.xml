@@ -9,4 +9,6 @@
     <string name="save">Save</string>
     <string name="default_error">Error occurs</string>
     <string name="validation_prompt">Please fill all fields</string>
+    <string name="no_content">No content</string>
+    <string name="tag_info">Tag:</string>
 </resources>

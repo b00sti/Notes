@@ -6,7 +6,6 @@ import android.support.annotation.StringRes
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import com.b00sti.notes.BR
 import com.b00sti.notes.R
 import com.b00sti.notes.base.BaseActivity
@@ -14,6 +13,7 @@ import com.b00sti.notes.databinding.ActivityMainBinding
 import com.b00sti.notes.ui.adding.NewNoteFragment
 import com.b00sti.notes.ui.notes.NotesFragment
 import com.b00sti.notes.utils.ResUtils
+import com.b00sti.notes.utils.gone
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -79,7 +79,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
         setToolbarTitle(toolbarTitleId)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
         supportActionBar?.setDisplayShowHomeEnabled(false)
-        fabAddNewNote.visibility = View.VISIBLE
+        fabAddNewNote.show()
         mSearch?.isVisible = true
     }
 
@@ -87,7 +87,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
         setToolbarTitle(toolbarTitleId)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        fabAddNewNote.visibility = View.GONE
+        fabAddNewNote.gone()
         mSearch?.collapseActionView()
         mSearch?.isVisible = false
     }

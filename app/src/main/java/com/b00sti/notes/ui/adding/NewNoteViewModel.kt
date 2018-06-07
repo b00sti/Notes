@@ -16,10 +16,9 @@ class NewNoteViewModel : BaseViewModel<NewNoteNavigator>() {
 
     fun updateNote() {
         prepareNote()
-        if (isNoteValidatedWithSuccess()) {
-            addNote()
-        } else {
-            getNavigator().showToast(R.string.validation_prompt)
+        when {
+            isNoteValidatedWithSuccess() -> addNote()
+            else -> getNavigator().showToast(R.string.validation_prompt)
         }
     }
 

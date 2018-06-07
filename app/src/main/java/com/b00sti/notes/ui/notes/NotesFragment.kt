@@ -13,6 +13,8 @@ import com.b00sti.notes.model.Note
 import com.b00sti.notes.ui.adding.NewNoteFragment
 import com.b00sti.notes.ui.details.NoteDetailsFragment
 import com.b00sti.notes.ui.main.MainActivity
+import com.b00sti.notes.utils.gone
+import com.b00sti.notes.utils.show
 import kotlinx.android.synthetic.main.fragment_notes.*
 
 /**
@@ -42,16 +44,16 @@ class NotesFragment : BaseFragment<FragmentNotesBinding, NotesViewModel>(), Note
         initUI()
     }
 
+    override fun onResume() {
+        super.onResume()
+        getParent<MainActivity>()?.customizeAsParentView(R.string.title_notes)
+    }
+
     private fun initUI() {
         viewModel.notesList.observe(this, Observer { list -> adapter.submitList(list) })
         rvNotes.layoutManager = LinearLayoutManager(getParent())
         rvNotes.adapter = adapter
         refreshNotes()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        getParent<MainActivity>()?.customizeAsParentView(R.string.title_notes)
     }
 
     private fun goToNoteDetails(note: Note) {
@@ -67,4 +69,9 @@ class NotesFragment : BaseFragment<FragmentNotesBinding, NotesViewModel>(), Note
     fun searchFor(queredText: String) = viewModel.searchFor(queredText)
 
     fun refreshNotes() = viewModel.refresh()
+
+    override fun setNoContentLabelAsVisible(visible: Boolean) = when {
+        visible -> tvNoContent.show()
+        else -> tvNoContent.gone()
+    }
 }

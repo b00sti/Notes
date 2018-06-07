@@ -7,7 +7,5 @@ import com.b00sti.notes.base.BaseViewModel
  */
 class MainViewModel : BaseViewModel<MainNavigator>() {
 
-    fun onNewNoteClicked() {
-        getNavigator().onNewClick()
-    }
+    fun onNewNoteClicked() = getNavigator().onNewClick()
 }
