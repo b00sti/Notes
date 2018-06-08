@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -37,15 +36,13 @@
 
             <ImageView
                 android:id="@+id/ivEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/Wrap"
                 android:padding="4dp"
                 android:src="@drawable/ic_edit_24dp"/>
 
             <ImageView
                 android:id="@+id/ivRemove"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/Wrap"
                 android:padding="4dp"
                 android:src="@drawable/ic_delete_24dp"/>
 

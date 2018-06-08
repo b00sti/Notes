@@ -14,8 +14,7 @@
     </data>
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        style="@style/Match">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -70,7 +69,8 @@
                 android:id="@+id/tvNoteText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="26dp"
+                android:layout_margin="24dp"
+                android:paddingBottom="24dp"
                 android:drawablePadding="16dp"
                 android:drawableStart="@drawable/ic_comment_24dp"
                 android:gravity="center_vertical"

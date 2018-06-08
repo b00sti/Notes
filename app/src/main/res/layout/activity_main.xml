@@ -13,8 +13,7 @@
 
     <android.support.design.widget.CoordinatorLayout
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        style="@style/Match"
         tools:context=".ui.main.MainActivity">
 
         <android.support.design.widget.AppBarLayout
@@ -40,8 +39,7 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabAddNewNote"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/Wrap"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             android:onClick="@{() -> vm.onNewNoteClicked()}"

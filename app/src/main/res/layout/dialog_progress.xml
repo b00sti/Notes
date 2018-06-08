@@ -5,7 +5,6 @@
                                              android:background="@android:color/transparent">
 
     <ProgressBar
-        android:id="@+id/pbProgressBar"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:visibility="visible"

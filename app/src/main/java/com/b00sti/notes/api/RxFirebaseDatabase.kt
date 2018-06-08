@@ -50,10 +50,10 @@ object RxFirebaseDatabase : IFirebaseDataBase {
             }
 
             override fun onDataChange(data: DataSnapshot?) {
+                val notes = ArrayList<Note>()
                 when {
-                    data == null || data.childrenCount == 0L -> emitter.onError(NullPointerException())
-                    else -> {
-                        val notes = ArrayList<Note>()
+                    data == null || data.childrenCount == 0L -> emitter.onSuccess(notes)
+                    else                                     -> {
                         for (entry in data.children) {
                             try {
                                 entry.getValue(Note::class.java)?.let { notes.add(it) }
@@ -70,7 +70,7 @@ object RxFirebaseDatabase : IFirebaseDataBase {
     }
 
     override fun searchNotes(searchText: String): Single<ArrayList<Note>> = Single.create { emitter ->
-        databaseMain.orderByChild("tag").startAt("#" + searchText).endAt("#" + searchText + "\uf8ff")
+        databaseMain.orderByChild("tag").startAt("#$searchText").endAt("#$searchText\uf8ff")
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onCancelled(error: DatabaseError?) {
                         if (error != null) emitter.onError(error.toException())
@@ -81,7 +81,7 @@ object RxFirebaseDatabase : IFirebaseDataBase {
                         val notes = ArrayList<Note>()
                         when {
                             data == null || data.childrenCount == 0L -> emitter.onSuccess(notes)
-                            else -> {
+                            else                                     -> {
                                 for (entry in data.children) {
                                     try {
                                         entry.getValue(Note::class.java)?.let { notes.add(it) }
